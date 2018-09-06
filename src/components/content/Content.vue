@@ -6,7 +6,7 @@
     <div class="clearfix">
       <div class="btn-group float-left" role="group">
         <button v-on:click="expose('created')" class="btn btn-outline-primary">최신순</button>
-        <button v-on:click="expose('like')" class="btn btn-outline-primary">좋아요순</button>
+        <button v-on:click="expose('like')" class="btn btn-outline-primary">인기순</button>
       </div>
     </div>
 

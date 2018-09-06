@@ -70,14 +70,18 @@
       },
       toggleCheck(content, index) {
         let flag = this.contentList[index].checked;
-        this.contentList[index].checked = !flag;
-        sessionStorage.removeItem(content.group.toString());
-        sessionStorage.setItem(content.group.toString(), JSON.stringify(this.contentList));
         if (!flag) {
+          if (this.selectedList.length === 8) {
+            alert('8개 이상 추가할 수 없습니다.');
+            return;
+          }
           this.selectedList.push(content.item);
         } else {
           this.selectedList.splice(this.selectedList.indexOf(content.item), 1);
         }
+        this.contentList[index].checked = !flag;
+        sessionStorage.removeItem(content.group.toString());
+        sessionStorage.setItem(content.group.toString(), JSON.stringify(this.contentList));
         sessionStorage.removeItem('selected');
         sessionStorage.setItem('selected', JSON.stringify(this.selectedList))
       },

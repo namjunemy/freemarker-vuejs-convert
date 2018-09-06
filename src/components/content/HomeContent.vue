@@ -124,8 +124,13 @@
     },
     methods: {
       saveSelectedList() {
+        if (!(this.propsSelectedList.length === 8)) {
+          alert("컨텐츠를 8개 선택하세요.");
+          return;
+        }
         if (this.startDate === null || this.endDate === null) {
-          alert("스케쥴링 시작, 끝시간을 선택하세요.")
+          alert("스케쥴링 시작, 끝시간을 선택하세요.");
+          return;
         }
         this.$emit('saveSelectedList', this.startDate, this.endDate);
         this.startDate = null;
