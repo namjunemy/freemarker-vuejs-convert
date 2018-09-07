@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import axios from 'axios'
 import App from './App.vue'
+import axios from 'axios'
+
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -9,7 +10,8 @@ import datePicker from 'vue-bootstrap-datetimepicker';
 import 'pc-bootstrap4-datetimepicker/build/css/bootstrap-datetimepicker.css';
 import $ from 'jquery'
 
-import BodyContent from './components/content/BodyContent';
+import ContentParent from './components/content/ContentParent';
+import PromotionParent from './components/promotion/PromotionParent';
 
 Object.defineProperty(Vue.prototype, '$axios', {value: axios});
 
@@ -31,7 +33,11 @@ const router = new VueRouter({
   routes: [
     {
       path: '/content',
-      component: BodyContent
+      component: ContentParent
+    },
+    {
+      path: '/promotion',
+      component: PromotionParent
     }
   ],
   mode: 'history'

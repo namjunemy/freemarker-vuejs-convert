@@ -5,7 +5,6 @@
              v-bind:propsContentApiUrl="contentApiUrl"
              v-bind:propsStartDate="startDate"
              v-bind:propsEndDate="endDate"
-             v-bind:propsDateOptions="options"
              v-on:getContentList="getContentList"
              v-on:expose="expose"
              v-on:toggleCheck="toggleCheck"></Content>
@@ -20,7 +19,7 @@
   import HomeContent from "./HomeContent"
 
   export default {
-    name: "BodyContent",
+    name: "ContentParent",
     data: function () {
       return {
         contentList: [],
@@ -29,14 +28,7 @@
         contentApiUrl: 'http://localhost:9090/api/content',
         homeContentApiUrl: 'http://localhost:9090/api/homeContent',
         startDate: null,
-        endDate: null,
-        options: {
-          // https://momentjs.com/docs/#/displaying/
-          format: 'YYYY/MM/DD HH:mm',
-          useCurrent: true,
-          showClear: true,
-          showClose: true
-        }
+        endDate: null
       }
     },
     methods: {
@@ -82,8 +74,8 @@
         this.contentList[index].checked = !flag;
         sessionStorage.removeItem(content.group.toString());
         sessionStorage.setItem(content.group.toString(), JSON.stringify(this.contentList));
-        sessionStorage.removeItem('selected');
-        sessionStorage.setItem('selected', JSON.stringify(this.selectedList))
+        sessionStorage.removeItem('selectedContentList');
+        sessionStorage.setItem('selectedContentList', JSON.stringify(this.selectedList))
       },
       initialSetup() {
         sessionStorage.clear();
@@ -133,6 +125,9 @@
     },
     created: function () {
       this.initialSetup();
+    },
+    destroyed: function() {
+      sessionStorage.clear();
     },
     components: {
       'Content': Content,
