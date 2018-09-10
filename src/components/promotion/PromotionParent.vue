@@ -3,7 +3,8 @@
     <Promotion v-bind:propsAddedList="addedList"
                v-on:addPromotion="addPromotion"
                v-on:removeAddedPromotion="removeAddedPromotion"
-               v-on:saveAddedPromotion="saveAddedPromotion"></Promotion>
+               v-on:saveAddedPromotion="saveAddedPromotion"
+               v-on:preview="preview"></Promotion>
     <HomePromotion v-bind:propsSavedPromotionList="savedPromotionList"
                    v-on:deleteSavedPromotion="deleteSavedPromotion"
                    v-on:updateSavedPromotion="updateSavedPromotion"></HomePromotion>
@@ -21,6 +22,7 @@
         addedList: [],
         savedPromotionList: [],
         homePromotionApiUrl: 'http://localhost:9090/api/homePromotion',
+        homePromotionPreviewApiUrl: 'http://localhost:9090/homePromotion/preview',
         startDate: null,
         endDate: null
       }
@@ -83,7 +85,6 @@
           }
         })
         .then((response) => {
-          console.log(response);
           this.initialSetup();
         })
         .catch((err) => {
@@ -91,19 +92,45 @@
         });
       },
       updateSavedPromotion(idx, newPromotion) {
-        console.log("!!!!!!!!!!" + JSON.stringify(newPromotion));
         this.$axios.put(this.homePromotionApiUrl + '/' + idx, JSON.stringify(newPromotion), {
             headers: {
               'Content-Type': 'application/json; charset=UTF-8'
             }
           }
-        ).then(
-          (response) => {
-            console.log(response);
+        ).then((response) => {
             this.initialSetup();
           }).catch((err) => {
           this.catchAxiosError(err);
         });
+      },
+      preview() {
+        let previewRequestList = [];
+        this.addedList.forEach((obj, index) => {
+          let saveRequest = {
+            title: obj.title,
+            landingUrl: obj.landingUrl,
+            order: index + 1
+          };
+          previewRequestList.push(saveRequest);
+        });
+        console.log(previewRequestList);
+        this.$axios.post(this.homePromotionPreviewApiUrl, JSON.stringify(previewRequestList), {
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8'
+          }
+        })
+        .then((response) => {
+          window.open(this.homePromotionPreviewApiUrl, "_blank");
+        })
+        .catch((err) => {
+          this.catchAxiosError(err);
+        });
+      },
+      initialSetup: function () {
+        sessionStorage.clear();
+        this.savedPromotionList = [];
+        this.addedList = [];
+        this.getSavedPromotion();
       },
       catchAxiosError(error) {
         if (error.response) {
@@ -116,13 +143,7 @@
           console.log(error.message);
         }
         console.log(error.config);
-      },
-      initialSetup: function () {
-        sessionStorage.clear();
-        this.savedPromotionList = [];
-        this.addedList = [];
-        this.getSavedPromotion();
-      },
+      }
     },
     created: function () {
       this.initialSetup();

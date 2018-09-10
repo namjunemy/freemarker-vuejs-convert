@@ -31,7 +31,7 @@
           삭제
         </button>
         <button type="button" class="btn btn-outline-primary"
-                onclick="preview()">
+                v-on:click="preview()">
           홈 미리보기
         </button>
         <button type="button" class="btn btn-outline-success" v-on:click="saveAddedPromotion()">
@@ -119,6 +119,9 @@
         this.newLandingUrl = null;
         this.startDate = null;
         this.endDate = null;
+      },
+      preview() {
+        this.$emit('preview');
       }
     }
   }

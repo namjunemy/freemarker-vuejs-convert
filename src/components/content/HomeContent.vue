@@ -1,5 +1,5 @@
 <template>
-  <div class="col-sm-6">
+  <div class="col-sm-7">
     <h2>노출 컨텐츠 리스트
       <div class="float-right">
       </div>
@@ -42,8 +42,11 @@
       <thead class="thead-light">
       <tr class="text-nowrap">
         <th scope="col">노출순서</th>
+        <th scope="col">프로그램</th>
         <th scope="col">이미지</th>
         <th scope="col">제목</th>
+        <th scope="col">재생시간</th>
+        <th scope="col">타입</th>
         <th scope="col">좋아요수</th>
         <th scope="col">업로드일</th>
       </tr>
@@ -51,12 +54,15 @@
       <tbody>
       <tr v-for="(content, index) in propsSelectedList">
         <th scope="row">{{ index + 1}}</th>
+        <td>{{content.platformContentTitle}}</td>
         <td class="w-25">
           <a v-bind:href="content.platformImgUrl" target="_blank">
             <img v-bind:src="content.platformImgUrl" class="img-thumbnail">
           </a>
         </td>
         <td>{{content.title}}</td>
+        <td>{{content.playTime}}</td>
+        <td>{{content.type}}</td>
         <td>{{content.like}}</td>
         <td>{{content.createdTime}}</td>
       </tr>
@@ -114,7 +120,6 @@
         startDate: null,
         endDate: null,
         options: {
-          // https://momentjs.com/docs/#/displaying/
           format: 'YYYY/MM/DD HH:mm',
           useCurrent: true,
           showClear: true,

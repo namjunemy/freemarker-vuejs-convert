@@ -5,10 +5,10 @@
         관리 기능
       </li>
       <li>
-        <router-link to="/content">홈 메인 노출 컨텐츠 관리</router-link>
+        <router-link to="/promotion">홈 상단 프로모션 문구 관리</router-link>
       </li>
       <li>
-        <router-link to="/promotion">홈 상단 프로모션 문구 관리</router-link>
+        <router-link to="/content">홈 메인 노출 컨텐츠 관리</router-link>
       </li>
       <li>
         <router-link to="/view" target="_blank">뷰 페이지 미리보기</router-link>

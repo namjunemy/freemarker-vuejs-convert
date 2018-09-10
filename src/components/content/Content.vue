@@ -1,5 +1,5 @@
 <template>
-  <div class="col-sm-6">
+  <div class="col-sm-5">
     <h2>컨텐츠 리스트</h2>
     <hr>
 
@@ -16,7 +16,6 @@
         <th scope="col">순위</th>
         <th scope="col">이미지</th>
         <th scope="col">제목</th>
-        <th scope="col">재생시간</th>
         <th scope="col">좋아요수</th>
         <th scope="col">업로드일</th>
         <th scope="col"></th>
@@ -33,7 +32,6 @@
           </a>
         </td>
         <td>{{content.item.title}}</td>
-        <td>{{content.item.playTime}}</td>
         <td>{{content.item.like}}</td>
         <td>{{content.item.createdTime}}</td>
         <td>

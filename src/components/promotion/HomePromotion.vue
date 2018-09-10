@@ -114,13 +114,6 @@
       deleteSavedPromotion: function (promotionIdx) {
         this.$emit('deleteSavedPromotion', promotionIdx);
       },
-      openModal: function (promotion) {
-        this.updatePromotion = promotion;
-        this.modalIdx = promotion.idx;
-        this.modalTitle = promotion.title;
-        this.modalLandingUrl = promotion.landingUrl;
-        this.showModal = true;
-      },
       updateSavedPromotion: function () {
         let newPromotion = {
           title: this.modalTitle,
@@ -128,6 +121,13 @@
         };
         this.$emit('updateSavedPromotion', this.modalIdx, newPromotion);
         this.showModal = false;
+      },
+      openModal: function (promotion) {
+        this.updatePromotion = promotion;
+        this.modalIdx = promotion.idx;
+        this.modalTitle = promotion.title;
+        this.modalLandingUrl = promotion.landingUrl;
+        this.showModal = true;
       }
     },
     components: {

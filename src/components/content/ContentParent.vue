@@ -44,18 +44,6 @@
           this.catchAxiosError(err);
         });
       },
-      catchAxiosError(error) {
-        if (error.response) {
-          console.log(error.response.headers);
-        }
-        else if (error.request) {
-          console.log(error.request);
-        }
-        else {
-          console.log(error.message);
-        }
-        console.log(error.config);
-      },
       expose(req) {
         this.contentList = [];
         this.contentList = JSON.parse(sessionStorage.getItem(req));
@@ -76,15 +64,6 @@
         sessionStorage.setItem(content.group.toString(), JSON.stringify(this.contentList));
         sessionStorage.removeItem('selectedContentList');
         sessionStorage.setItem('selectedContentList', JSON.stringify(this.selectedList))
-      },
-      initialSetup() {
-        sessionStorage.clear();
-        this.selectedList = [];
-        this.homeContentList = [];
-        this.getContentList('created');
-        this.getContentList('like');
-        this.expose('like');
-        this.getHomeContentList();
       },
       saveSelectedList(startDate, endDate) {
         let saveRequestList = [];
@@ -121,12 +100,33 @@
         }).catch((err) => {
           this.catchAxiosError(err);
         });
+      },
+      initialSetup() {
+        sessionStorage.clear();
+        this.selectedList = [];
+        this.homeContentList = [];
+        this.getContentList('created');
+        this.getContentList('like');
+        this.expose('like');
+        this.getHomeContentList();
+      },
+      catchAxiosError(error) {
+        if (error.response) {
+          console.log(error.response.headers);
+        }
+        else if (error.request) {
+          console.log(error.request);
+        }
+        else {
+          console.log(error.message);
+        }
+        console.log(error.config);
       }
     },
     created: function () {
       this.initialSetup();
     },
-    destroyed: function() {
+    destroyed: function () {
       sessionStorage.clear();
     },
     components: {
