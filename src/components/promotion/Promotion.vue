@@ -30,7 +30,7 @@
                 v-on:click="removeAddedPromotion()">
           삭제
         </button>
-        <button type="button" form="hiddenForm" class="btn btn-outline-primary"
+        <button type="button" class="btn btn-outline-primary"
                 onclick="preview()">
           홈 미리보기
         </button>
@@ -115,6 +115,8 @@
           return;
         }
         this.$emit('saveAddedPromotion', this.startDate, this.endDate);
+        this.newPromotionTitle = null;
+        this.newLandingUrl = null;
         this.startDate = null;
         this.endDate = null;
       }

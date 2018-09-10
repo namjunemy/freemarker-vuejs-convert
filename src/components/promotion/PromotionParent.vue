@@ -5,7 +5,8 @@
                v-on:removeAddedPromotion="removeAddedPromotion"
                v-on:saveAddedPromotion="saveAddedPromotion"></Promotion>
     <HomePromotion v-bind:propsSavedPromotionList="savedPromotionList"
-                   v-on:deleteSavedPromotion="deleteSavedPromotion"></HomePromotion>
+                   v-on:deleteSavedPromotion="deleteSavedPromotion"
+                   v-on:updateSavedPromotion="updateSavedPromotion"></HomePromotion>
   </div>
 </template>
 
@@ -21,7 +22,7 @@
         savedPromotionList: [],
         homePromotionApiUrl: 'http://localhost:9090/api/homePromotion',
         startDate: null,
-        endDate: null,
+        endDate: null
       }
     },
     methods: {
@@ -81,11 +82,26 @@
             'Content-Type': 'application/json; charset=UTF-8'
           }
         })
-        .then(response => {
+        .then((response) => {
           console.log(response);
           this.initialSetup();
         })
         .catch((err) => {
+          this.catchAxiosError(err);
+        });
+      },
+      updateSavedPromotion(idx, newPromotion) {
+        console.log("!!!!!!!!!!" + JSON.stringify(newPromotion));
+        this.$axios.put(this.homePromotionApiUrl + '/' + idx, JSON.stringify(newPromotion), {
+            headers: {
+              'Content-Type': 'application/json; charset=UTF-8'
+            }
+          }
+        ).then(
+          (response) => {
+            console.log(response);
+            this.initialSetup();
+          }).catch((err) => {
           this.catchAxiosError(err);
         });
       },
