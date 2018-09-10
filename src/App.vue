@@ -18,6 +18,7 @@
   import Navbar from "./components/Navbar";
   import Sidebar from "./components/Sidebar"
   import Main from "./components/Main"
+  import Index from "./components/index/Index"
   import ContentParent from './components/content/ContentParent';
   import PromotionParent from './components/promotion/PromotionParent';
 
@@ -26,6 +27,7 @@
       'Navbar': Navbar,
       'Sidebar': Sidebar,
       'Main': Main,
+      'Index': Index,
       'ContentParent': ContentParent,
       'PromotionParent': PromotionParent
     }

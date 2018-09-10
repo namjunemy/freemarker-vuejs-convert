@@ -10,6 +10,7 @@ import datePicker from 'vue-bootstrap-datetimepicker';
 import 'pc-bootstrap4-datetimepicker/build/css/bootstrap-datetimepicker.css';
 import $ from 'jquery'
 
+import Index from './components/index/Index';
 import ContentParent from './components/content/ContentParent';
 import PromotionParent from './components/promotion/PromotionParent';
 
@@ -31,6 +32,10 @@ $.extend(true, $.fn.datetimepicker.defaults, {
 
 const router = new VueRouter({
   routes: [
+    {
+      path: '/',
+      component: Index
+    },
     {
       path: '/content',
       component: ContentParent
