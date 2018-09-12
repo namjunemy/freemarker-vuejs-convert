@@ -10,6 +10,7 @@
              v-on:toggleCheck="toggleCheck"></Content>
     <HomeContent v-bind:propsSelectedList="selectedList"
                  v-bind:propsHomeContentList="homeContentList"
+                 v-bind:propsLastScheduledDate="lastScheduledDate"
                  v-on:saveSelectedList="saveSelectedList"></HomeContent>
   </div>
 </template>
@@ -28,7 +29,8 @@
         contentApiUrl: 'http://localhost:9090/api/content',
         homeContentApiUrl: 'http://localhost:9090/api/homeContent',
         startDate: null,
-        endDate: null
+        endDate: null,
+        lastScheduledDate: null
       }
     },
     methods: {
@@ -97,6 +99,12 @@
             this.homeContentList.push(item);
           });
           sessionStorage.setItem('homeContentList', JSON.stringify(this.homeContentList));
+          if (this.homeContentList.length === 0) {
+            this.lastScheduledDate = null;
+          } else {
+            this.lastScheduledDate = new Date(JSON.parse(
+              sessionStorage.getItem('homeContentList')).pop().endTime);
+          }
         }).catch((err) => {
           this.catchAxiosError(err);
         });

@@ -1,6 +1,7 @@
 <template>
   <div class="row">
     <Promotion v-bind:propsAddedList="addedList"
+               v-bind:propsLastScheduledDate="lastScheduledDate"
                v-on:addPromotion="addPromotion"
                v-on:removeAddedPromotion="removeAddedPromotion"
                v-on:saveAddedPromotion="saveAddedPromotion"
@@ -24,7 +25,8 @@
         homePromotionApiUrl: 'http://localhost:9090/api/homePromotion',
         homePromotionPreviewApiUrl: 'http://localhost:9090/homePromotion/preview',
         startDate: null,
-        endDate: null
+        endDate: null,
+        lastScheduledDate: null
       }
     },
     methods: {
@@ -61,7 +63,6 @@
           }
         })
         .then(response => {
-          console.log(response);
           this.initialSetup();
         })
         .catch((err) => {
@@ -74,6 +75,12 @@
             this.savedPromotionList.push(item);
           });
           sessionStorage.setItem('savedPromotionList', JSON.stringify(this.savedPromotionList));
+          if (this.savedPromotionList.length === 0) {
+            this.lastScheduledDate = null;
+          } else {
+            this.lastScheduledDate = new Date(JSON.parse(
+              sessionStorage.getItem('savedPromotionList')).pop().endTime);
+          }
         }).catch((err) => {
           this.catchAxiosError(err);
         });
@@ -98,8 +105,8 @@
             }
           }
         ).then((response) => {
-            this.initialSetup();
-          }).catch((err) => {
+          this.initialSetup();
+        }).catch((err) => {
           this.catchAxiosError(err);
         });
       },
@@ -130,6 +137,7 @@
         sessionStorage.clear();
         this.savedPromotionList = [];
         this.addedList = [];
+
         this.getSavedPromotion();
       },
       catchAxiosError(error) {

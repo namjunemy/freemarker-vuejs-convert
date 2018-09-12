@@ -11,7 +11,7 @@
         <router-link to="/content">홈 메인 노출 컨텐츠 관리</router-link>
       </li>
       <li>
-        <router-link to="/view" target="_blank">뷰 페이지 미리보기</router-link>
+        <a href="http://localhost:9090/view" target="_blank">뷰 페이지 미리보기</a>
       </li>
     </ul>
   </div>

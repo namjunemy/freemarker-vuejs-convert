@@ -24,7 +24,7 @@
       </form>
     </div>
 
-    <h4>컨텐츠 추가
+    <h4>프로모션 문구 추가
       <div class="float-right">
         <button type="button" class="btn btn-outline-danger"
                 v-on:click="removeAddedPromotion()">
@@ -83,7 +83,14 @@
 <script>
   export default {
     name: "Promotion",
-    props: ['propsAddedList'],
+    props: ['propsAddedList', 'propsLastScheduledDate'],
+    watch: {
+      propsLastScheduledDate: function () {
+        this.startDate = null;
+        this.endDate = null;
+        this.setLastScheduledTime();
+      }
+    },
     data: function () {
       return {
         newPromotionTitle: null,
@@ -94,7 +101,8 @@
           format: 'YYYY/MM/DD HH:mm',
           useCurrent: true,
           showClear: true,
-          showClose: true
+          showClose: true,
+          minDate: null
         }
       }
     },
@@ -114,11 +122,25 @@
           alert("스케쥴링 시작, 끝시간을 선택하세요.");
           return;
         }
+        if (!(this.isStartDateBeforeEndDate())) {
+          alert("스케줄링 끝 시간은 시작 시간 이후여야 합니다.");
+          return;
+        }
+        if (sessionStorage.getItem('addedPromotionList') === null) {
+          alert("프로모션 문구를 추가하세요.");
+          return;
+        }
         this.$emit('saveAddedPromotion', this.startDate, this.endDate);
         this.newPromotionTitle = null;
         this.newLandingUrl = null;
         this.startDate = null;
         this.endDate = null;
+      },
+      isStartDateBeforeEndDate() {
+        return new Date(this.startDate) < new Date(this.endDate);
+      },
+      setLastScheduledTime() {
+        this.options.minDate = this.propsLastScheduledDate;
       },
       preview() {
         this.$emit('preview');

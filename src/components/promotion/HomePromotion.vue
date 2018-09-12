@@ -6,7 +6,7 @@
     </h2>
     <hr/>
 
-    <h4>등록된 컨텐츠
+    <h4>등록된 프로모션
       <div class="float-right">
         <a href="#endOfHomeContents" class="button btn-sm btn-dark">아래로</a>
       </div>

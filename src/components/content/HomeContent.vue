@@ -114,7 +114,12 @@
 <script>
   export default {
     name: "HomeContent",
-    props: ['propsSelectedList', 'propsHomeContentList'],
+    props: ['propsSelectedList', 'propsHomeContentList', 'propsLastScheduledDate'],
+    watch: {
+      propsLastScheduledDate: function () {
+        this.setLastScheduledTime();
+      }
+    },
     data: function () {
       return {
         startDate: null,
@@ -123,23 +128,35 @@
           format: 'YYYY/MM/DD HH:mm',
           useCurrent: true,
           showClear: true,
-          showClose: true
+          showClose: true,
+          minDate: null
         }
       }
     },
     methods: {
       saveSelectedList() {
-        if (!(this.propsSelectedList.length === 8)) {
-          alert("컨텐츠를 8개 선택하세요.");
-          return;
-        }
         if (this.startDate === null || this.endDate === null) {
           alert("스케쥴링 시작, 끝시간을 선택하세요.");
           return;
         }
+        if (!(this.isStartDateBeforeEndDate())) {
+          alert("스케줄링 끝 시간은 시작 시간 이후여야 합니다.");
+          return;
+        }
+        if (!(this.propsSelectedList.length === 8)) {
+          alert("컨텐츠를 8개 선택하세요.");
+          return;
+        }
         this.$emit('saveSelectedList', this.startDate, this.endDate);
+        this.setLastScheduledTime();
         this.startDate = null;
         this.endDate = null;
+      },
+      isStartDateBeforeEndDate() {
+        return new Date(this.startDate) < new Date(this.endDate);
+      },
+      setLastScheduledTime() {
+        this.options.minDate = this.propsLastScheduledDate;
       }
     }
   }
